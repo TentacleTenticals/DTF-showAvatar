@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         New Userscript
+// @name         DTF.ru. Show me avatars.
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @author       Tentacle Tenticals
