@@ -16,7 +16,7 @@ document.body.onload = function(){
   console.log('Loaded!');
 let mainFilter = new RegExp(`comment__avatar|content-header-author__avatar|subsite-card__avatar|v-header__cover|v-header-avatar|${document.querySelector("div[class='layout__right-column'] div[style^='background-image").className}`),
     commentsRightBarFilter = new RegExp(document.querySelector("div[class='layout__right-column'] div[style^='background-image").className),
-    ctrlPressed, cPressed, shiftPressed, hovered,
+    ctrlPressed, shiftPressed, hovered,
     // Настройки максимального размера превью аватарки
     userAvatarSize = '400px', // Аватарка пользователя (комментарий)
     userProfileCoverSizeWidth = '990px', // Обложка пользователя в профиле (длина)
@@ -128,7 +128,6 @@ let mainFilter = new RegExp(`comment__avatar|content-header-author__avatar|subsi
       }else
       if(!s.target.classList.value.match(mainFilter) && ctrlPressed && !shiftPressed){
         hovered = false;
-        hoveredTarget = false;
           if(document.querySelector(`div[class='avatar-preview']`)){
               document.querySelector(`div[class='avatar-preview']`).remove();
           }
