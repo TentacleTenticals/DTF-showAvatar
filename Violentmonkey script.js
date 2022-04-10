@@ -5,9 +5,9 @@
 // @grant       none
 // @version     0.1
 // @author      Tentacle Tenticals
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=dtf.ru
+// @icon        https://www.google.com/s2/favicons?sz=64&domain=dtf.ru
 // @description Показ аватарок пользователей, а также копирование ссылки на аватарку. Курсор на аватарку и Ctrl для её показа, или Ctrl+Shift для копирования URL ссылки в буфер обмена.
-// @homepage https://github.com/TentacleTenticals/DTF-showAvatar
+// @homepage    https://github.com/TentacleTenticals/DTF-showAvatar
 // ==/UserScript==
 
 document.body.onload = function(){
