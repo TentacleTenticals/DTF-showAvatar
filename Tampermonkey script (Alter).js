@@ -1,11 +1,10 @@
 // ==UserScript==
-// @name         DTF.ru. Show me avatars. Alter.
-// @namespace    http://tampermonkey.net/
-// @version      0.2
-// @author       Tentacle Tenticals
-// @match        https://dtf.ru/*
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=dtf.ru
-// @grant        none
+// @name        DTF.ru. Show me avatars. Alter.
+// @namespace   http://tampermonkey.net/
+// @match       https://dtf.ru/*
+// @grant       none
+// @version     1.1
+// @author      Tentacle Tenticals
 // @description Показ аватарок пользователей, а также копирование ссылки на аватарку. Курсор на аватарку и Ctrl для её показа, или Ctrl+Shift для копирования URL ссылки в буфер обмена.
 // @homepage https://github.com/TentacleTenticals/DTF-showAvatar
 // ==/UserScript==
@@ -15,7 +14,8 @@
 
 document.body.onload = function(){
   console.log('Loaded!');
-  let mainFilter = new RegExp(`comment__avatar|content-header-author__avatar|subsite-card__avatar|v-header__cover|v-header-avatar|${document.querySelector("div[class='layout__right-column'] div[style^='background-image").className}`),
+let mainFilter = new RegExp(`comment__avatar|content-header-author__avatar|subsite-card__avatar|v-header__cover|v-header-avatar|${document.querySelector("div[class='layout__right-column'] div[style^='background-image").className}`),
+    commentsRightBarFilter = new RegExp(document.querySelector("div[class='layout__right-column'] div[style^='background-image").className),
     ctrlPressed, cPressed, shiftPressed, hovered,
     // Настройки максимального размера превью аватарки
     userAvatarSize = '400px', // Аватарка пользователя (комментарий)
@@ -93,8 +93,23 @@ document.body.onload = function(){
           alert.textContent = 'Ссылка на аватарку успешно скопирована';
           alert.style.position = 'fixed';
           alert.style.zIndex = '1000';
-          alert.style.top = `${s.target.getBoundingClientRect().top - 25}px`;
-          alert.style.left = `${s.target.getBoundingClientRect().left + 20}px`;
+          if(s.target.classList.value.match(/v-header-avatar|v-header__cover/)){
+              alert.style.top = `${s.target.getBoundingClientRect().top + 300}px`;
+              alert.style.left = `${s.target.getBoundingClientRect().left + 0}px`;
+          }else
+          if(s.target.classList.value.match(/comment__avatar|content-header-author__avatar|subsite-card__avatar/)){
+              alert.style.top = `${s.target.getBoundingClientRect().top - 25}px`;
+              alert.style.left = `${s.target.getBoundingClientRect().left + 20}px`;
+          }else
+          if(s.target.classList.value.match(commentsRightBarFilter))
+          {
+              alert.style.top = `${s.target.getBoundingClientRect().top - 25}px`;
+              alert.style.left = `${s.target.getBoundingClientRect().left + 20}px`;
+          }else
+          {
+              alert.style.top = `${s.target.getBoundingClientRect().top + 300}px`;
+              alert.style.left = `${s.target.getBoundingClientRect().left + 0}px`;
+          }
           alert.style.background = 'rgb(165 235 189)';
           alert.style.borderRadius = '3px';
           alert.style.padding = '3px';
@@ -113,6 +128,7 @@ document.body.onload = function(){
       }else
       if(!s.target.classList.value.match(mainFilter) && ctrlPressed && !shiftPressed){
         hovered = false;
+        hoveredTarget = false;
           if(document.querySelector(`div[class='avatar-preview']`)){
               document.querySelector(`div[class='avatar-preview']`).remove();
           }
