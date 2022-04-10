@@ -5,7 +5,8 @@
 // @grant       none
 // @version     1.1
 // @author      Tentacle Tenticals
-// @description -
+// @description Показ аватарок пользователей, а также копирование ссылки на аватарку. Курсор на аватарку и Ctrl для её показа, или Ctrl+Shift для копирования URL ссылки в буфер обмена.
+// @homepage https://github.com/TentacleTenticals/DTF-showAvatar
 // ==/UserScript==
 
 (function() {
