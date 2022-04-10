@@ -2,7 +2,7 @@ document.body.onload = function(){
   console.log('Loaded!');
   let mainFilter = new RegExp(`comment__avatar|content-header-author__avatar|subsite-card__avatar|${document.querySelector("div[class='layout__right-column'] div[style^='background-image").className}`),
     commentsRightBarFilter = new RegExp(document.querySelector("div[class='layout__right-column'] div[style^='background-image").className),
-    ctrlPressed, cPressed, shiftPressed, hovered,
+    ctrlPressed, shiftPressed, hovered,
     // Настройки максимального размера превью аватарки
     userAvatarSize = '400px', // Аватарка пользователя (комментарий)
     authorAvatarSizeHeader = '400px', // Аватарка подсайта статьи (хеадер)
