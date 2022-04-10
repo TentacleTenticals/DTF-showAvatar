@@ -1,16 +1,19 @@
 document.body.onload = function(){
   console.log('Loaded!');
-  let mainFilter = new RegExp(`comment__avatar|content-header-author__avatar|subsite-card__avatar|${document.querySelector("div[class='layout__right-column'] div[style^='background-image").className}`),
+let mainFilter = new RegExp(`comment__avatar|content-header-author__avatar|subsite-card__avatar|v-header__cover|v-header-avatar|${document.querySelector("div[class='layout__right-column'] div[style^='background-image").className}`),
     commentsRightBarFilter = new RegExp(document.querySelector("div[class='layout__right-column'] div[style^='background-image").className),
     ctrlPressed, shiftPressed, hovered,
     // Настройки максимального размера превью аватарки
     userAvatarSize = '400px', // Аватарка пользователя (комментарий)
+    userProfileCoverSizeWidth = '990px', // Обложка пользователя в профиле (длина)
+    userProfileCoverSizeHeight = '400px', // Обложка пользователя в профиле (ширина)
+    userProfileAvatarSize = '400px', // Аватар пользователя в профиле
     authorAvatarSizeHeader = '400px', // Аватарка подсайта статьи (хеадер)
     authorAvatarSizeFooter = '400px', // Аватарка автора статьи (футер)
     userAvatarSizeCommentsPanel = '250px'; // Аватарка пользователя (боковая панель комментариев, aka "live-список" комментариев к статьям)
   document.addEventListener('mouseover', hover, true);
   function hover(s){
-    /* Аватарка пользователя в комментарии / Аватарка автора статьи в хеадере (шапке) / Аватарка автора статьи в футере (конце статьи) /
+    /* Аватарка пользователя в комментарии / Аватарка автора статьи в хеадере (шапке) / Аватарка автора статьи в футере (конце статьи) / 
   Аватарка пользователя в комментарии в 'live-списке' комментариев справа */
       if(s.target.classList.value.match(mainFilter) && !ctrlPressed && !shiftPressed) {
         hovered = s.target;
@@ -29,6 +32,18 @@ document.body.onload = function(){
               avatarPreview.style.left = `${s.target.getBoundingClientRect().left + 40}px`;
               img.style.maxWidth = userAvatarSize;
               img.style.maxHeight = userAvatarSize;
+          }else
+          if(s.target.classList.value.match(/v-header-avatar/)){
+              avatarPreview.style.top = `${s.target.getBoundingClientRect().top + 170}px`
+              avatarPreview.style.left = `${s.target.getBoundingClientRect().left + 20}px`
+              img.style.maxWidth = userProfileAvatarSize;
+              img.style.maxHeight = userProfileAvatarSize;
+          }else
+          if(s.target.classList.value.match(/v-header__cover/)){
+              avatarPreview.style.top = `${s.target.getBoundingClientRect().top + 300}px`
+              avatarPreview.style.left = `${s.target.getBoundingClientRect().left + 0}px`
+              img.style.maxWidth = userProfileCoverSizeWidth;
+              img.style.maxHeight = userProfileCoverSizeHeight;
           }else
           if(s.target.classList.value.match(/content-header-author__avatar/)){
               avatarPreview.style.top = `${s.target.getBoundingClientRect().top + 25}px`;
@@ -64,8 +79,23 @@ document.body.onload = function(){
           alert.textContent = 'Ссылка на аватарку успешно скопирована';
           alert.style.position = 'fixed';
           alert.style.zIndex = '1000';
-          alert.style.top = `${s.target.getBoundingClientRect().top - 25}px`;
-          alert.style.left = `${s.target.getBoundingClientRect().left + 20}px`;
+          if(s.target.classList.value.match(/v-header-avatar|v-header__cover/)){
+              alert.style.top = `${s.target.getBoundingClientRect().top + 300}px`;
+              alert.style.left = `${s.target.getBoundingClientRect().left + 0}px`;
+          }else
+          if(s.target.classList.value.match(/comment__avatar|content-header-author__avatar|subsite-card__avatar/)){
+              alert.style.top = `${s.target.getBoundingClientRect().top - 25}px`;
+              alert.style.left = `${s.target.getBoundingClientRect().left + 20}px`;
+          }else
+          if(s.target.classList.value.match(commentsRightBarFilter))
+          {
+              alert.style.top = `${s.target.getBoundingClientRect().top - 25}px`;
+              alert.style.left = `${s.target.getBoundingClientRect().left + 20}px`;
+          }else
+          {
+              alert.style.top = `${s.target.getBoundingClientRect().top + 300}px`;
+              alert.style.left = `${s.target.getBoundingClientRect().left + 0}px`;
+          }
           alert.style.background = 'rgb(165 235 189)';
           alert.style.borderRadius = '3px';
           alert.style.padding = '3px';
