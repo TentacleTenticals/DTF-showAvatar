@@ -148,10 +148,5 @@ document.body.onload = function(){
           document.querySelector(`div[class='avatar-preview']`).remove();
       }
   }
-
-  // Вернуть скролл боковой панели комментариев. Необходимо ТОЛЬКО если в CSS у вас включён видимый скролл панели комментариев.
-  document.querySelector(`.layout__right-column > div > div > div+div > div`).onwheel = function(e){
-      e.stopPropagation()
-  }
 }
 })();
