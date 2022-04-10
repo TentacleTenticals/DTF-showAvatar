@@ -100,7 +100,6 @@ document.body.onload = function(){
       }else
       if(!s.target.classList.value.match(mainFilter) && ctrlPressed && !shiftPressed){
         hovered = false;
-        hoveredTarget = false;
           if(document.querySelector(`div[class='avatar-preview']`)){
               document.querySelector(`div[class='avatar-preview']`).remove();
           }
