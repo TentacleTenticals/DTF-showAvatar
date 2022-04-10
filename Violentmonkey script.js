@@ -3,10 +3,9 @@
 // @namespace   Violentmonkey Scripts
 // @match       https://dtf.ru/*
 // @grant       none
-// @version     1.0
+// @version     0.1
 // @author      Tentacle Tenticals
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=dtf.ru
-// @grant        none
 // @description Показ аватарок пользователей, а также копирование ссылки на аватарку. Курсор на аватарку и Ctrl для её показа, или Ctrl+Shift для копирования URL ссылки в буфер обмена.
 // @homepage https://github.com/TentacleTenticals/DTF-showAvatar
 // ==/UserScript==
