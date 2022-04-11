@@ -1,4 +1,5 @@
-document.body.onload = function(){
+window.addEventListener('load', run);
+function run(){
   console.log('Loaded!');
 let mainFilter = new RegExp(`comment__avatar|content-header-author__avatar|subsite-card__avatar|v-header__cover|v-header-avatar|${document.querySelector("div[class='layout__right-column'] div[style^='background-image").className}`),
     commentsRightBarFilter = new RegExp(document.querySelector("div[class='layout__right-column'] div[style^='background-image").className),
