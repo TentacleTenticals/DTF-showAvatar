@@ -38,8 +38,9 @@ function run(){
    }`
   document.body.appendChild(css);
 
-let mainFilter = new RegExp(`comment__avatar|content-header-author__avatar|subsite-card__avatar|v-header__cover|v-header-avatar|${document.querySelector("div[class='layout__right-column'] div[style^='background-image").className}`),
+let mainFilter = new RegExp(`comment__avatar__image|content-header-author__avatar|subsite-card__avatar|v-header__cover|v-header-avatar|${document.querySelector("div[class='layout__right-column'] div[style^='background-image").className}`),
     commentsRightBarFilter = new RegExp(document.querySelector("div[class='layout__right-column'] div[style^='background-image").className),
+    urlFixer = new RegExp(`.*(http[s]{0,1}:\/\/leonardo.osnova.io\/[a-zA-Z0-9-_]+)\/.+`),
     button1Pressed, button2Pressed, button3Pressed, hovered,
     
     // Настройки клавиш. Используйте Control/Shift/Alt/и т.п. НЕ используйте буквы алфавита, цифры, знаки.
@@ -107,16 +108,19 @@ let mainFilter = new RegExp(`comment__avatar|content-header-author__avatar|subsi
       if(s.target.classList.value.match(mainFilter) && check(s)){
           if(!document.querySelector(`div[class='avatar-preview']`)){
               let img = new Image();
-              img.src = s.target.style.backgroundImage.replace(/.+(http.+)\/-\/scale.+/, '$1');
+              if(s.target.classList.value.match(commentsRightBarFilter) || s.target.classList.value.match(`subsite-card__avatar|v-header-avatar|v-header__cover`)) img.src = s.target.style.backgroundImage.replace(urlFixer, '$1')
+              else img.src = s.target.children[0].src.replace(urlFixer, '$1');
               let avatarPreview = document.createElement('div');
               avatarPreview.className = 'avatar-preview';
               avatarPreview.style.position = 'fixed';
               avatarPreview.style.zIndex = '1000';
-          if(s.target.classList.value.match(/comment__avatar/)){
+          if(s.target.classList.value.match(/comment__avatar__image/)){
               avatarPreview.style.top = `${s.target.getBoundingClientRect().top + 20}px`;
               avatarPreview.style.left = `${s.target.getBoundingClientRect().left + 40}px`;
               img.style.maxWidth = userAvatarSize;
               img.style.maxHeight = userAvatarSize;
+              img.style.width = '-webkit-fill-available';
+              img.style.height = '-webkit-fill-available';
           }else
           if(s.target.classList.value.match(/v-header-avatar/)){
               avatarPreview.style.top = `${s.target.getBoundingClientRect().top + 170}px`
@@ -172,19 +176,30 @@ let mainFilter = new RegExp(`comment__avatar|content-header-author__avatar|subsi
 
             for(let i = 0; i < searches.length; i++){
                 if(searches[i].use){
-                  new A({
-                    name: searches[i].name,
-                    searchUrl: searches[i].url,
-                    targetUrl: hovered.style.backgroundImage.replace(/.+(http.+)\/-\/scale.+/, '$1'),
-                    elem: menu
-                  });
+                  if(s.target.classList.value.match(commentsRightBarFilter) || s.target.classList.value.match(`subsite-card__avatar|v-header-avatar|v-header__cover`)) {
+                      new A({
+                        name: searches[i].name,
+                        searchUrl: searches[i].url,
+                        targetUrl: hovered.style.backgroundImage.replace(urlFixer, '$1'),
+                        elem: menu
+                      });
+                  }
+                  else {
+                      new A({
+                        name: searches[i].name,
+                        searchUrl: searches[i].url,
+                        targetUrl: hovered.children[0].src.replace(urlFixer, '$1'),
+                        elem: menu
+                      });
+                       }
                 }
             }
         }
       }else
       if(s.target.classList.value.match(mainFilter) && button1Pressed && button2Pressed && !button3Pressed){
         hovered = s.target;
-          navigator.clipboard.writeText(s.target.style.backgroundImage.replace(/.+(http.+)\/-\/scale.+/, '$1'));
+          if(s.target.classList.value.match(commentsRightBarFilter) || s.target.classList.value.match(`subsite-card__avatar|v-header-avatar|v-header__cover`)) navigator.clipboard.writeText(s.target.style.backgroundImage.replace(urlFixer, '$1'))
+          else navigator.clipboard.writeText(s.target.children[0].src.replace(urlFixer, '$1'));
           if(!document.querySelector(`div[class='avatar-link-copyed']`)){
           let alert = document.createElement('div');
           alert.className = 'avatar-link-copyed';
@@ -199,7 +214,7 @@ let mainFilter = new RegExp(`comment__avatar|content-header-author__avatar|subsi
               alert.style.top = `${s.target.getBoundingClientRect().top + 300}px`;
               alert.style.left = `${s.target.getBoundingClientRect().left + 0}px`;
           }else
-          if(s.target.classList.value.match(/comment__avatar|content-header-author__avatar|subsite-card__avatar/)){
+          if(s.target.classList.value.match(/comment__avatar__image|content-header-author__avatar|subsite-card__avatar/)){
               alert.style.top = `${s.target.getBoundingClientRect().top - 25}px`;
               alert.style.left = `${s.target.getBoundingClientRect().left + 20}px`;
           }else
